@@ -87,31 +87,35 @@ async function seedHikes() {
 // Call the seeding function when the main.html page loads.
 seedHikes();
 
-async function displayCardsDynamically() {
-    let cardTemplate = document.getElementById("hikeCardTemplate");
-    const hikesCollectionRef = collection(db, "hikes");
+async function displayHikesDynamically() {
+    // reference to the hikes colleciton
+    const hikesRef = collection(db, "hikes");
 
-    try {
-        const querySnapshot = await getDocs(hikesCollectionRef);
-        querySnapshot.forEach(doc => {
-            // Clone the template
-            let newcard = cardTemplate.content.cloneNode(true);
-            // Get hike data once
-            const hike = doc.data();
+    // get the template from front-end
+    let cartTemplate = document.getElementById("hikeCardTemplate");
 
-            // Populate the card with hike data
-            newcard.querySelector('.card-title').textContent = hike.name;
-            newcard.querySelector('.card-text').textContent = hike.details || `Located in ${hike.city}.`;
-            newcard.querySelector('.card-length').textContent = hike.length;
-            newcard.querySelector('.card-image').src = `./images/${hike.code}.jpg`;
+    // read the hikes colelciton
+    const querySnapshot = await getDocs(hikesRef);
 
-            // Attach the new card to the container
-            document.getElementById("hikes-go-here").appendChild(newcard);
-        });
-    } catch (error) {
-        console.error("Error getting documents: ", error);
-    }
+    //loop through three hikes
+    querySnapshot.forEach(doc => {
+        // create the copy of the template
+        let newcard = cartTemplate.content.cloneNode(true);
+
+        //read this hike in the loop
+        const thisHike = doc.data();
+
+        //populate data in the template
+        newcard.querySelector('.card-title').textContent = thisHike.name;
+        newcard.querySelector('.card-text').textContent = thisHike.details || `Located in ${hike.city}.`;
+        newcard.querySelector('.card-length').textContent = thisHike.length;
+        newcard.querySelector('.card-image').src = `./images/${thisHike.code}.jpg`;
+        newcard.querySelector(".read-more").href = `eachHike.html?docID=${doc.id}`;
+
+        // attach the template to the fron-end
+        document.getElementById("hikes-go-here").appendChild(newcard);
+    })
+
+
 }
-
-// Call the function to display cards when the page loads
-displayCardsDynamically();
+displayHikesDynamically()
