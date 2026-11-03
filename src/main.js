@@ -116,12 +116,15 @@ async function displayHikesDynamically() {
         newcard.querySelector('.card-image').src = `./images/${thisHike.code}.jpg`;
         newcard.querySelector(".read-more").href = `eachHike.html?docID=${doc.id}`;
 
+        setupHeart(newcard, doc.id);    // activate the heart on this card
+
         // attach the template to the fron-end
         document.getElementById("hikes-go-here").appendChild(newcard);
     })
 
 
 }
+
 // Runs once Firebase knows if someone is logged in
 onAuthReady(async function (user) {
     if (!user) {
