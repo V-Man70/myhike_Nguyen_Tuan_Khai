@@ -1,0 +1,3 @@
+import{o as l,a as d,c as m,d as i,s as o}from"./app-DWDdZAgG.js";let t=null;l(function(e){if(!e){location.href="index.html";return}t=e});async function u(e){e.preventDefault();const a={name:document.getElementById("hikeNameInput").value,city:document.getElementById("cityInput").value,level:document.getElementById("levelInput").value,length:Number(document.getElementById("lengthInput").value),details:document.getElementById("detailsInput").value,owner:t.uid,ownerName:t.displayName||t.email,last_updated:o()};try{await d(m(i,"hikes"),a),location.href="main.html"}catch(n){alert(`Error saving hike:
+${n.code||""}
+${n.message||n}`)}}document.getElementById("addHikeForm").addEventListener("submit",u);
